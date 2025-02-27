@@ -45,7 +45,7 @@ import java.util.List;
 
 public class StudentController {
     private static final String URL = "jdbc:mysql://localhost:3306/StudentDB";
-    private static final String USER = "root";
+    private static final String USER = "abhishek";
     private static final String PASSWORD = "yourpassword";
 
     private Connection getConnection() throws SQLException {
