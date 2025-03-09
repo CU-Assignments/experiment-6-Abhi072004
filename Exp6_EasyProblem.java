@@ -1,31 +1,33 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.*;
+
+class Employee {
+    String name;
+    int age;
+    double salary;
+
+    Employee(String name, int age, double salary) {
+        this.name = name;
+        this.age = age;
+        this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        return name + " | Age: " + age + " | Salary: $" + salary;
+    }
+}
 
 public class Exp6_EasyProblem {
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/JAVALAB2";
-        String user = "root";
-        String password = “abc@314”;
+        List<Employee> employees = Arrays.asList(
+            new Employee("Alice", 30, 50000),
+            new Employee("Bob", 25, 60000),
+            new Employee("Charlie", 28, 55000)
+        );
 
-        String query = "SELECT EmpID, Name, Salary FROM Employee";
+        employees.sort(Comparator.comparingDouble(e -> e.salary));
 
-        try (Connection conn = DriverManager.getConnection(url, user, password);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            System.out.println("EmpID | Name | Salary");
-            System.out.println("----------------------");
-            while (rs.next()) {
-                int empID = rs.getInt("EmpID");
-                String name = rs.getString("Name");
-                double salary = rs.getDouble("Salary");
-                System.out.println(empID + " | " + name + " | " + salary);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        System.out.println("Sorted Employees by Salary:");
+        employees.forEach(System.out::println);
     }
 }
